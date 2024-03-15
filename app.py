@@ -1,6 +1,7 @@
 # Only needed for access to command line arguments
 import sys
 
+from PyQt6.QtCore import QSize
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
 
 # Subclass QMainWindow to customize your application's main window
@@ -10,6 +11,7 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
     button = QPushButton("Press Me!")
+    self.setFixedSize(QSize(400, 300))
 
     # Set the central widget of the Window.
     self.setCentralWidget(button)
