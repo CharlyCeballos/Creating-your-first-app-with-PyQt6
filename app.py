@@ -12,9 +12,14 @@ class MainWindow(QMainWindow):
     self.setWindowTitle("My App")
     button = QPushButton("Press Me!")
     self.setFixedSize(QSize(400, 300))
+    button.setCheckable(True)
+    button.clicked.connect(self.the_button_was_clicked)
 
     # Set the central widget of the Window.
     self.setCentralWidget(button)
+
+  def the_button_was_clicked(self):
+    print("Clicked!")
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
