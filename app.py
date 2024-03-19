@@ -1,7 +1,7 @@
 # Only needed for access to command line arguments
 import sys
 
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QLineEdit, QVBoxLayout, QWidget
+from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow
 
 
 # Subclass QMainWindow to customize your application's main window
@@ -10,21 +10,22 @@ class MainWindow(QMainWindow):
     super().__init__()
 
     self.setWindowTitle("My App")
-
-    self.label = QLabel()
-
-    self.input = QLineEdit()
-    self.input.textChanged.connect(self.label.setText)
-
-    layout = QVBoxLayout()
-    layout.addWidget(self.input)
-    layout.addWidget(self.label)
-
-    container = QWidget()
-    container.setLayout(layout)
+    self.label = QLabel("Click in this window")
 
     # Set the central widget of the Window.
-    self.setCentralWidget(container)
+    self.setCentralWidget(self.label)
+
+  def mouseMoveEvent(self, e):
+    self.label.setText("mouseMoveEvent")
+
+  def mousePressEvent(self, e):
+    self.label.setText("mousePressEvent")
+
+  def mouseReleaseEvent(self, e):
+    self.label.setText("mouseReleaseEvent")
+
+  def mouseDoubleClickEvent(self, e):
+    self.label.setText("mouseDoubleClickEvent")
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
