@@ -11,6 +11,8 @@ class MainWindow(QMainWindow):
   def __init__(self):
     super().__init__()
     self.show()
+    # init variable
+    self.n_times_clicked = 0
 
     self.setWindowTitle("My App")
     self.label = QLabel("Test right button please")
@@ -27,6 +29,22 @@ class MainWindow(QMainWindow):
     context.addAction(QAction("test 2", self))
     context.addAction(QAction("test 3", self))
     context.exec(self.mapToGlobal(pos))
+
+  def mousePressEvent(self, event):
+    #reasign variable value
+    self.n_times_clicked = self.n_times_clicked + 1
+
+    new_window_title = f"Mouse pressed {self.n_times_clicked} times"
+
+    # Redefine Window Title
+    self.setWindowTitle(new_window_title)
+
+    # init new variable (label2)
+    self.label2 = QLabel(new_window_title)
+    # substitute label with label2
+    self.setCentralWidget(self.label2)
+
+    super().mousePressEvent(event)
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
