@@ -5,7 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QSlider,
+  QDial,
 )
 
 
@@ -17,13 +17,10 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    # widget = QSlider()
-    # widget = QSlider(Qt.Orientation.Horizontal) # Default value
-    widget = QSlider(Qt.Orientation.Vertical)
+    widget = QDial()
 
-    widget.setMinimum(-10)
-    widget.setMaximum(3)
-    # Or: widget.setRange(-10,3)
+    widget.setRange(-10, 100)
+    widget.setSingleStep(5)
 
     widget.valueChanged.connect(self.value_changed)
     widget.sliderMoved.connect(self.slider_position)
