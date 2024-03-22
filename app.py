@@ -5,7 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QCheckBox,
+  QComboBox,
 )
 
 
@@ -17,20 +17,24 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QCheckBox()
-    widget.setCheckState(Qt.CheckState.Checked)
-    widget.setCheckState(Qt.CheckState.Unchecked)
-    widget.setCheckState(Qt.CheckState.PartiallyChecked)
+    widget = QComboBox()
+    widget.setEditable(True)
+    widget.setMaxCount(2)
+    widget.addItems(["One", "Two", "Three"])
 
-    # For tristate: widget.setCheckState(Qt.PartiallyChecked)
-    # Or: widget.setTriState(True)
-    widget.stateChanged.connect(self.show_state)
+    # Sends the current index (position) of the selected item.
+    widget.currentIndexChanged.connect( self.index_changed )
+
+    # There is an alternate signal to send the text.
+    widget.currentTextChanged.connect( self.text_changed )
 
     # Set the central widget of the Window.
     self.setCentralWidget(widget)
 
-  def show_state(self, s):
-    print(s == Qt.CheckState.Checked.value)
+  def index_changed(self, i): # i is an int
+    print(i)
+
+  def text_changed(self, s): # s is a str
     print(s)
 
 # You need one (and only one) QApplication instance per application.
