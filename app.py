@@ -5,7 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QComboBox,
+  QListWidget,
 )
 
 
@@ -17,22 +17,17 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QComboBox()
-    widget.setEditable(True)
-    widget.setMaxCount(2)
+    widget = QListWidget()
     widget.addItems(["One", "Two", "Three"])
 
-    # Sends the current index (position) of the selected item.
-    widget.currentIndexChanged.connect( self.index_changed )
-
-    # There is an alternate signal to send the text.
-    widget.currentTextChanged.connect( self.text_changed )
+    widget.currentItemChanged.connect(self.index_changed)
+    widget.currentTextChanged.connect(self.text_changed)
 
     # Set the central widget of the Window.
     self.setCentralWidget(widget)
 
-  def index_changed(self, i): # i is an int
-    print(i)
+  def index_changed(self, i): # Not an index, i is a QListWidgetItem
+    print(i.text())
 
   def text_changed(self, s): # s is a str
     print(s)
