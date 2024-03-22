@@ -5,7 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QListWidget,
+  QLineEdit,
 )
 
 
@@ -17,19 +17,34 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QListWidget()
-    widget.addItems(["One", "Two", "Three"])
+    widget = QLineEdit()
+    widget.setMaxLength(10)
+    widget.setPlaceholderText("Enter your text")
 
-    widget.currentItemChanged.connect(self.index_changed)
-    widget.currentTextChanged.connect(self.text_changed)
+    #widget.setReadOnly(True) # uncomment this to make readonly
+
+    widget.returnPressed.connect(self.enter_pressed) #IDK why returnPressed catch Enter key
+    widget.selectionChanged.connect(self.selection_changed)
+    widget.textChanged.connect(self.text_changed)
+    widget.textEdited.connect(self.text_edited)
 
     # Set the central widget of the Window.
     self.setCentralWidget(widget)
 
-  def index_changed(self, i): # Not an index, i is a QListWidgetItem
-    print(i.text())
+  def enter_pressed(self):
+    print("Return pressed!")
+    self.centralWidget().setText("BOOM!")
 
-  def text_changed(self, s): # s is a str
+  def selection_changed(self):
+    print("Selection changed")
+    print(self.centralWidget().selectedText())
+
+  def text_changed(self, s):
+    print("Text changed...")
+    print(s)
+
+  def text_edited(self, s):
+    print("Text edited...")
     print(s)
 
 # You need one (and only one) QApplication instance per application.
