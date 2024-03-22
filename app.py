@@ -2,11 +2,10 @@
 import sys
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QLabel,
+  QCheckBox,
 )
 
 
@@ -18,12 +17,21 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QLabel()
-    widget.setPixmap(QPixmap('imag.jpeg'))
-    widget.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
-    widget.setScaledContents(True)
+    widget = QCheckBox()
+    widget.setCheckState(Qt.CheckState.Checked)
+    widget.setCheckState(Qt.CheckState.Unchecked)
+    widget.setCheckState(Qt.CheckState.PartiallyChecked)
 
+    # For tristate: widget.setCheckState(Qt.PartiallyChecked)
+    # Or: widget.setTriState(True)
+    widget.stateChanged.connect(self.show_state)
+
+    # Set the central widget of the Window.
     self.setCentralWidget(widget)
+
+  def show_state(self, s):
+    print(s == Qt.CheckState.Checked.value)
+    print(s)
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
