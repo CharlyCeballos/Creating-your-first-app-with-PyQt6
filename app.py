@@ -31,6 +31,8 @@ class MainWindow(QMainWindow):
     widget.valueChanged.connect(self.value_changed)
     widget.textChanged.connect(self.value_changed_str)
 
+    widget.lineEdit().setReadOnly(True)
+
     # Set the central widget of the Window.
     self.setCentralWidget(widget)
 
