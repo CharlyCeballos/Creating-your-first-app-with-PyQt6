@@ -5,7 +5,8 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QLineEdit,
+  QSpinBox,
+  # QDoubleSpinBox,
 )
 
 
@@ -17,35 +18,26 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QLineEdit()
-    widget.setMaxLength(10)
-    widget.setPlaceholderText("Enter your text")
-    widget.setInputMask('000.000.000.000;_')
+    widget = QSpinBox()
+    # Or: widget = QDoubleSpinBox()
 
-    #widget.setReadOnly(True) # uncomment this to make readonly
+    widget.setMinimum(-10)
+    widget.setMaximum(3)
+    # Or: widget.setRange(-10,3)
 
-    widget.returnPressed.connect(self.enter_pressed) #IDK why returnPressed catch Enter key
-    widget.selectionChanged.connect(self.selection_changed)
-    widget.textChanged.connect(self.text_changed)
-    widget.textEdited.connect(self.text_edited)
+    widget.setPrefix("$")
+    widget.setSuffix("c")
+    widget.setSingleStep(3)  # Or e.g. 0.5 for QDoubleSpinBox
+    widget.valueChanged.connect(self.value_changed)
+    widget.textChanged.connect(self.value_changed_str)
 
     # Set the central widget of the Window.
     self.setCentralWidget(widget)
 
-  def enter_pressed(self):
-    print("Return pressed!")
-    self.centralWidget().setText("BOOM!")
+  def value_changed(self, i):
+    print(i)
 
-  def selection_changed(self):
-    print("Selection changed")
-    print(self.centralWidget().selectedText())
-
-  def text_changed(self, s):
-    print("Text changed...")
-    print(s)
-
-  def text_edited(self, s):
-    print("Text edited...")
+  def value_changed_str(self, s):
     print(s)
 
 # You need one (and only one) QApplication instance per application.
