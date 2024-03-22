@@ -2,6 +2,7 @@
 import sys
 
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
@@ -17,11 +18,10 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QLabel("Hello")
-    font = widget.font()
-    font.setPointSize(30)
-    widget.setFont(font)
+    widget = QLabel()
+    widget.setPixmap(QPixmap('imag.jpeg'))
     widget.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignVCenter)
+    widget.setScaledContents(True)
 
     self.setCentralWidget(widget)
 
