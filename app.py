@@ -5,8 +5,7 @@ from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import (
   QMainWindow,
   QApplication,
-  QSpinBox,
-  # QDoubleSpinBox,
+  QSlider,
 )
 
 
@@ -18,20 +17,18 @@ class MainWindow(QMainWindow):
 
     self.setWindowTitle("My App")
 
-    widget = QSpinBox()
-    # Or: widget = QDoubleSpinBox()
+    # widget = QSlider()
+    # widget = QSlider(Qt.Orientation.Horizontal) # Default value
+    widget = QSlider(Qt.Orientation.Vertical)
 
     widget.setMinimum(-10)
     widget.setMaximum(3)
     # Or: widget.setRange(-10,3)
 
-    widget.setPrefix("$")
-    widget.setSuffix("c")
-    widget.setSingleStep(3)  # Or e.g. 0.5 for QDoubleSpinBox
     widget.valueChanged.connect(self.value_changed)
-    widget.textChanged.connect(self.value_changed_str)
-
-    widget.lineEdit().setReadOnly(True)
+    widget.sliderMoved.connect(self.slider_position)
+    widget.sliderPressed.connect(self.slider_pressed)
+    widget.sliderReleased.connect(self.slider_released)
 
     # Set the central widget of the Window.
     self.setCentralWidget(widget)
@@ -39,8 +36,14 @@ class MainWindow(QMainWindow):
   def value_changed(self, i):
     print(i)
 
-  def value_changed_str(self, s):
-    print(s)
+  def slider_position(self, p):
+    print("position", p)
+
+  def slider_pressed(self):
+    print("Pressed!")
+
+  def slider_released(self):
+    print("Released")
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
