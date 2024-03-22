@@ -2,8 +2,28 @@
 import sys
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QAction
-from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow, QMenu
+from PyQt6.QtWidgets import (
+  QApplication,
+  QCheckBox,
+  QComboBox,
+  QDateEdit,
+  QDateTimeEdit,
+  QDial,
+  QDoubleSpinBox,
+  QFontComboBox,
+  QLabel,
+  QLCDNumber,
+  QLineEdit,
+  QMainWindow,
+  QProgressBar,
+  QPushButton,
+  QRadioButton,
+  QSlider,
+  QSpinBox,
+  QTimeEdit,
+  QVBoxLayout,
+  QWidget,
+)
 
 
 # Subclass QMainWindow to customize your application's main window
@@ -11,40 +31,38 @@ class MainWindow(QMainWindow):
   def __init__(self):
     super().__init__()
     self.show()
-    # init variable
-    self.n_times_clicked = 0
 
-    self.setWindowTitle("My App")
-    self.label = QLabel("Test right button please")
+    self.setWindowTitle("Widgets App")
 
-    # Set the central widget of the Window.
-    self.setCentralWidget(self.label)
+    layout = QVBoxLayout()
+    widgets = [
+      QCheckBox,
+      QComboBox,
+      QDateEdit,
+      QDateTimeEdit,
+      QDial,
+      QDoubleSpinBox,
+      QFontComboBox,
+      QLCDNumber,
+      QLabel,
+      QLineEdit,
+      QProgressBar,
+      QPushButton,
+      QRadioButton,
+      QSlider,
+      QSpinBox,
+      QTimeEdit,
+    ]
 
-    self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-    self.customContextMenuRequested.connect(self.on_context_menu)
+    for w in widgets:
+      layout.addWidget(w())
 
-  def on_context_menu(self, pos):
-    context = QMenu(self)
-    context.addAction(QAction("test 1", self))
-    context.addAction(QAction("test 2", self))
-    context.addAction(QAction("test 3", self))
-    context.exec(self.mapToGlobal(pos))
+    widget = QWidget()
+    widget.setLayout(layout)
 
-  def mousePressEvent(self, event):
-    #reasign variable value
-    self.n_times_clicked = self.n_times_clicked + 1
-
-    new_window_title = f"Mouse pressed {self.n_times_clicked} times"
-
-    # Redefine Window Title
-    self.setWindowTitle(new_window_title)
-
-    # init new variable (label2)
-    self.label2 = QLabel(new_window_title)
-    # substitute label with label2
-    self.setCentralWidget(self.label2)
-
-    super().mousePressEvent(event)
+    # Set the central widget of the Window. Widget will expand
+    # to take up all the space in the window by default.
+    self.setCentralWidget(widget)
 
 # You need one (and only one) QApplication instance per application.
 # Pass in sys.argv to allow command line arguments for your app.
@@ -60,3 +78,25 @@ app.exec()
 
 
 # Your application won't reach here until you exit and the event loop has stopped.
+###################################################################################
+# Lets have a look at all the example widgets, from top to bottom:
+'''
+Widget 	        ||  What it does
+____________________________________
+QCheckbox 	    ||  A checkbox
+QComboBox 	    ||  A dropdown list box
+QDateEdit 	    ||  For editing dates and datetimes
+QDateTimeEdit 	||  For editing dates and datetimes
+QDial 	        ||  Rotatable dial
+QDoubleSpinBox 	||  A number spinner for floats
+QFontComboBox 	||  A list of fonts
+QLCDNumber 	    ||  A quite ugly LCD display
+QLabel 	        ||  Just a label, not interactive
+QLineEdit 	    ||  Enter a line of text
+QProgressBar 	  ||  A progress bar
+QPushButton 	  ||  A button
+QRadioButton 	  ||  A toggle set, with only one active item
+QSlider 	      ||  A slider
+QSpinBox 	      ||  An integer spinner
+QTimeEdit 	    ||  For editing times
+'''
