@@ -20,6 +20,7 @@ class MainWindow(QMainWindow):
     widget = QLineEdit()
     widget.setMaxLength(10)
     widget.setPlaceholderText("Enter your text")
+    widget.setInputMask('000.000.000.000;_')
 
     #widget.setReadOnly(True) # uncomment this to make readonly
 
