@@ -1,0 +1,62 @@
+# Only needed for access to command line arguments
+import sys
+
+from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QAction
+from PyQt6.QtWidgets import QApplication, QLabel, QMainWindow, QMenu
+
+
+# Subclass QMainWindow to customize your application's main window
+class MainWindow(QMainWindow):
+  def __init__(self):
+    super().__init__()
+    self.show()
+    # init variable
+    self.n_times_clicked = 0
+
+    self.setWindowTitle("My App")
+    self.label = QLabel("Test right button please")
+
+    # Set the central widget of the Window.
+    self.setCentralWidget(self.label)
+
+    self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+    self.customContextMenuRequested.connect(self.on_context_menu)
+
+  def on_context_menu(self, pos):
+    context = QMenu(self)
+    context.addAction(QAction("test 1", self))
+    context.addAction(QAction("test 2", self))
+    context.addAction(QAction("test 3", self))
+    context.exec(self.mapToGlobal(pos))
+
+  def mousePressEvent(self, event):
+    #reasign variable value
+    self.n_times_clicked = self.n_times_clicked + 1
+
+    new_window_title = f"Mouse pressed {self.n_times_clicked} times"
+
+    # Redefine Window Title
+    self.setWindowTitle(new_window_title)
+
+    # init new variable (label2)
+    self.label2 = QLabel(new_window_title)
+    # substitute label with label2
+    self.setCentralWidget(self.label2)
+
+    super().mousePressEvent(event)
+
+# You need one (and only one) QApplication instance per application.
+# Pass in sys.argv to allow command line arguments for your app.
+# If you know you won't use command line arguments QApplication([]) works too.
+app = QApplication(sys.argv)
+
+# Create a Qt widget, which will be our window.
+window = MainWindow()
+window.show()  # IMPORTANT!!!!! Windows are hidden by default.
+
+# Start the event loop.
+app.exec()
+
+
+# Your application won't reach here until you exit and the event loop has stopped.
