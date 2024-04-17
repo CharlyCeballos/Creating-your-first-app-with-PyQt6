@@ -3,6 +3,8 @@
 
 A quick PyQt6 course.
 
+This courseis based on [The complete PyQt6 tutorial ](https://www.pythonguis.com/pyqt6-tutorial/)
+
 ## Course division
 
 The course is divided by modules (letters) and sections (numbers)
